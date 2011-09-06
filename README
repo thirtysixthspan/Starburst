@@ -1,0 +1,78 @@
+% Starburst Algorithm
+%
+% This source code is part of the starburst algorithm.
+% Starburst algorithm is free; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 2 of the License, or
+% (at your option) any later version.
+%
+% Starburst algorithm is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with cvEyeTracker; if not, write to the Free Software
+% Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+%
+%
+% Starburst Algorithm - Version 1.0.0
+% Part of the openEyes ToolKit -- http://hcvl.hci.iastate.edu/openEyes
+% Release Date:
+% Authors : Dongheng Li <donghengli@gmail.com>
+%           Derrick Parkhurst <derrick.parkhurst@hcvl.hci.iastate.edu>
+% Copyright (c) 2005
+% All Rights Reserved.
+
+
+DESCRIPTION:
+--------------------------------------------------------------------------
+Starburst algorithm is eyetracking software aimed at tracking dark-pupil 
+eye images and predicting the user's point of gaze in the scene image.
+
+Usage:
+--------------------------------------------------------------------------
+
+This algorithm package for eye tracking can be divided into four steps: 
+
+- Extracts images from video. Function extract_images_from_video()
+
+  Put eye video and scene video into the same directory. The program will ask you to read them in. 
+  And then the program will extract eye and scene images from the videos and put them into ./Eye/
+  and ./Scene/ respectively.
+
+- Calibration. Function extract_calibration_from_video() 
+
+  The user need to specify the directory which contains the /Eye and /Scene image directory. The left
+  and right mouse button can be used to browse the images. When the eye is fixing at one of the calibration
+  point, the user can indicat the calibration point in the scene image and indicate the start point in
+  the eye image. And then the program will highlight the pupil ellipse and the corneal reflection. After
+  confirmation of the user, that calibration point correspondence is added. Finally, a file (calibration.mat)
+  containing the calibration data and an image (calibration.jpg) of calibration point correspondences will 
+  be saved in the current directory automatically.
+
+- Process the whole video. Function calculate_pupil_and_gaze() 
+
+  The user need to specify the directory which contains the /Eye and /Scene image directory and the calibration
+  file (calibration.mat). The user also need to eliminate bad calibration point correspondences  by click at the blue 
+  cross indicating the location of the corneal reflection). And then the program will calculate the gaze location 
+  in the scene image based.   
+
+- Plot the result on the scene and eye image. Function plot_pupil_and_gaze( )
+
+  The user need to specify the directory which contains the /Eye and /Scene image directory and the result
+  file (ellipse_result.mat). The program will plot the pupil ellipse and its center on the eye image and plots 
+  the gaze location in the scene image. And then these tow image form the result image saved in ./Result/ directory.
+
+
+
+Debugging:
+--------------------------------------------------------------------------
+Report bugs to donghengli@gmail.com
+
+--------------------------------------------------------------------------
+Version Log:
+Starburst-1.1.0:
+-Faster ransac (not using for loop to check inliers)
+-Faster location of corner reflection (regionprops(labeled,'Area','Centroid','EquivDiameter');)
+
